@@ -39,7 +39,7 @@ public class MenuScreen extends BaseScreen {
         batch.draw(img, pos.x, pos.y);
         batch.end();
         if (Gdx.graphics.getWidth() - 256 > pos.x && Gdx.graphics.getHeight() - 256 > pos.y) {
-            if(target.x != pos.x && target.y != pos.y) {
+            if(Math.abs(target.x - pos.x) >=1 && Math.abs(target.y - pos.y) >= 1) {
                 pos.add(v);
             }
         }
@@ -64,7 +64,7 @@ public class MenuScreen extends BaseScreen {
         target.y = Gdx.graphics.getHeight() - screenY;
         // New logic here
         v = target.sub(pos);
-        v.scl(0.01f);
+        //v.scl(0.01f);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 }
