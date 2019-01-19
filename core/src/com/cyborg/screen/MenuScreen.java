@@ -26,7 +26,7 @@ public class MenuScreen extends BaseScreen {
         img = new Texture("badlogic.jpg");
         pos = new Vector2(0, 0);
         target = new Vector2(0, 0);
-        v = new Vector2(1,1);
+        v = new Vector2(0,0);
     }
 
     @Override
@@ -63,7 +63,8 @@ public class MenuScreen extends BaseScreen {
         target.x = screenX;
         target.y = Gdx.graphics.getHeight() - screenY;
         // New logic here
-        
+        v = target.sub(pos);
+        v.scl(0.01f);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 }
