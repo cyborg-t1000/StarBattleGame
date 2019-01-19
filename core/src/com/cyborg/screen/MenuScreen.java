@@ -62,6 +62,8 @@ public class MenuScreen extends BaseScreen {
         System.out.println("touchDown " + screenX + " " + (Gdx.graphics.getHeight() - screenY));
         target.x = screenX;
         target.y = Gdx.graphics.getHeight() - screenY;
+        // New logic here
+        
         return super.touchDown(screenX, screenY, pointer, button);
     }
 }
