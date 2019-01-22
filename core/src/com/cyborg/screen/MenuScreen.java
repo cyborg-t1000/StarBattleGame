@@ -10,6 +10,8 @@ import com.cyborg.base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
 
+    private static final float V_LEN = 2.5f;
+
     SpriteBatch batch;
     Texture img;
     Texture background;
@@ -60,11 +62,8 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("touchDown " + screenX + " " + (Gdx.graphics.getHeight() - screenY));
-        target.x = screenX;
-        target.y = Gdx.graphics.getHeight() - screenY;
-        // New logic here
-        v = target.sub(pos);
-        //v.scl(0.01f);
+        target.set(screenX, Gdx.graphics.getHeight() - screenY);
+        v.set(target.cpy().sub(pos).setLength(V_LEN));
         return super.touchDown(screenX, screenY, pointer, button);
     }
 }
