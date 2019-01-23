@@ -8,7 +8,7 @@ import com.cyborg.base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
 
-    private static final float V_LEN = 2.5f;
+    private static final float V_LEN = 0.005f;
 
     Texture img;
     Texture background;
@@ -16,13 +16,19 @@ public class MenuScreen extends BaseScreen {
     Vector2 pos;
     Vector2 v;
 
+    Vector2 touch;
+
+    Vector2 buf;
+
     @Override
     public void show() {
         super.show();
         background = new Texture("bg.png");
         img = new Texture("badlogic.jpg");
-        pos = new Vector2(-0.5f, -0.5f);
-        v = new Vector2(0.002f, 0.002f);
+        pos = new Vector2(-0.25f, -0.25f);
+        v = new Vector2(0.0f, 0.0f);
+        touch = new Vector2(0f, 0f);
+        buf = new Vector2(0, 0);
     }
 
     @Override
@@ -30,11 +36,19 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         Gdx.gl.glClearColor(0.5f, 0.2f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        buf.set(touch);
+        if (buf.sub(pos).len() > V_LEN) {
+            pos.add(v);
+        } else {
+            pos.set(touch);
+        }
+
         batch.begin();
         batch.draw(background, -0.5f, -0.5f, 1f, 1f);
         batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
         batch.end();
-        pos.add(v);
+
     }
 
     @Override
@@ -49,7 +63,9 @@ public class MenuScreen extends BaseScreen {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return super.touchDown(screenX, screenY, pointer, button);
+    public boolean touchDown(Vector2 touch, int pointer) {
+        touch.set(touch);
+        v.set(touch.cpy().sub(pos).setLength(V_LEN));
+        return super.touchDown(touch, pointer);
     }
 }
