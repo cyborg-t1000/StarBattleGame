@@ -17,7 +17,6 @@ public class MenuScreen extends BaseScreen {
     Vector2 v;
 
     Vector2 touch;
-
     Vector2 buf;
 
     @Override
