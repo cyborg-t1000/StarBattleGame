@@ -17,7 +17,6 @@ public class MenuScreen extends BaseScreen {
     Vector2 v;
 
     Vector2 touch;
-
     Vector2 buf;
 
     @Override
@@ -64,7 +63,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        touch.set(touch);
+        this.touch.set(touch);
         v.set(touch.cpy().sub(pos).setLength(V_LEN));
         return super.touchDown(touch, pointer);
     }
