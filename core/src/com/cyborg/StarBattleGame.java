@@ -1,6 +1,7 @@
 package com.cyborg;
 
 import com.badlogic.gdx.Game;
+
 import com.cyborg.screen.MenuScreen;
 
 public class StarBattleGame extends Game {
