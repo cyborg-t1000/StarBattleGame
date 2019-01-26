@@ -11,13 +11,14 @@ import com.cyborg.base.BaseScreen;
 import com.cyborg.math.Rect;
 import com.cyborg.sprite.Background;
 import com.cyborg.sprite.Star;
+import com.cyborg.sprite.menu.Exit;
 
 public class MenuScreen extends BaseScreen {
     private TextureAtlas atlas;
     private Texture bg;
     private Background background;
     private Star star[];
-
+    private Exit exitButton;
 
     @Override
     public void show() {
@@ -29,6 +30,7 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < star.length; i++) {
             star[i] = new Star(atlas);
         }
+        Exit exitButton = new Exit(atlas);
     }
 
     @Override
@@ -52,6 +54,7 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < star.length; i++) {
             star[i].draw(batch);
         }
+        exitButton.draw(batch);
         batch.end();
     }
 
@@ -61,6 +64,7 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < star.length; i++) {
             star[i].resize(worldBounds);
         }
+        exitButton.resize(worldBounds);
     }
 
     @Override
@@ -73,5 +77,10 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         return super.touchDown(touch, pointer);
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer) {
+        return super.touchUp(touch, pointer);
     }
 }
