@@ -1,23 +1,25 @@
 package com.cyborg.sprite.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.cyborg.math.Rect;
 
 public class ExitButton extends ScaledTouchUpButton {
 
     public ExitButton(TextureAtlas atlas) {
         super(atlas.findRegion("btExit"));
-        pos.set(-0.2f,0f);
-        setHeightProportion(0.1f);
-        if(this.isPressed()) {
-            setHeightProportion(0.1f * this.PRESS_SCALE);
-        }
+        setHeightProportion(0.2f);
     }
 
     @Override
     public void action() {
-        System.out.println("exit");
-        System.exit(0);
+        Gdx.app.exit();
     }
 
-
+    @Override
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        setBottom(worldBounds.getBottom() + 0.05f);
+        setRight(worldBounds.getRight() - 0.05f);
+    }
 }

@@ -1,5 +1,6 @@
 package com.cyborg.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,12 +16,19 @@ import com.cyborg.sprite.menu.ExitButton;
 import com.cyborg.sprite.menu.PlayButton;
 
 public class MenuScreen extends BaseScreen {
+
+    private Game game;
+
     private TextureAtlas atlas;
     private Texture bg;
     private Background background;
     private Star star[];
     private ExitButton exitButton;
     private PlayButton playButton;
+
+    public MenuScreen(Game game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -33,7 +41,7 @@ public class MenuScreen extends BaseScreen {
             star[i] = new Star(atlas);
         }
         exitButton = new ExitButton(atlas);
-        playButton = new PlayButton(atlas);
+        playButton = new PlayButton(atlas, game);
     }
 
     @Override
