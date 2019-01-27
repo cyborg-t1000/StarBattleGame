@@ -40,6 +40,14 @@ public class MainShip extends Sprite {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v, delta);
+        if(this.getRight() >= worldBounds.getRight()) {
+            stop();
+            setRight(worldBounds.getRight());
+        }
+        if(this.getLeft() <= worldBounds.getLeft()) {
+            stop();
+            setLeft(worldBounds.getLeft());
+        }
     }
 
     public boolean keyDown(int keycode) {
