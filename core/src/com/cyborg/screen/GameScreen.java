@@ -101,11 +101,30 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        mainShip.touchDown(touch, pointer);
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
+        mainShip.touchUp(touch, pointer);
         return super.touchUp(touch, pointer);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+    }
+
+    @Override
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        mainShip.touchDragged(touch, pointer);
+        return super.touchDragged(touch, pointer);
+    }
+
+    @Override
+    public boolean mouseMoved(Vector2 touch) {
+        mainShip.mouseMoved(touch);
+        return super.mouseMoved(touch);
     }
 }

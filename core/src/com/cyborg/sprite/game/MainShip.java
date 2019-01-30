@@ -14,6 +14,7 @@ public class MainShip extends Sprite {
 
     private final Vector2 v0 = new Vector2(0.5f, 0);
     private Vector2 v = new Vector2();
+    private Vector2 move2 = new Vector2();
 
     private boolean isPressedLeft;
     private boolean isPressedRight;
@@ -93,6 +94,12 @@ public class MainShip extends Sprite {
         return false;
     }
 
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer) {
+        shoot();
+        return super.touchDown(touch, pointer);
+    }
+
     private void moveRight() {
         v.set(v0);
     }
@@ -110,5 +117,27 @@ public class MainShip extends Sprite {
         bullet.set(this, bulletRegion, pos, new Vector2(0, 0.5f), 0.01f, worldBounds, 1);
     }
 
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        System.out.println("TOUCH");
+        shoot();
+        mouseMove(touch);
+        return false;
+    }
 
+    public boolean mouseMoved(Vector2 touch) {
+        System.out.println("MOVE");
+        mouseMove(touch);
+        return false;
+    }
+
+    private void mouseMove(Vector2 touch) {
+        if(touch.x<pos.x) {
+            moveLeft();
+            return;
+        }
+        if(touch.x>pos.x) {
+            moveRight();
+            return;
+        }
+    }
 }
