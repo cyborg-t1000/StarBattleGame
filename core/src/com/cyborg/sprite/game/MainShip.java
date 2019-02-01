@@ -1,6 +1,8 @@
 package com.cyborg.sprite.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -30,11 +32,14 @@ public class MainShip extends Sprite {
     private float reloadInterval;
     private float reloadTimer;
 
+    private Sound shootSound;
+
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletPool = bulletPool;
         this.reloadInterval = 0.2f;
+        this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
         setHeightProportion(0.15f);
     }
 
@@ -117,6 +122,7 @@ public class MainShip extends Sprite {
     }
 
     private void shoot() {
+        shootSound.play();
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, new Vector2(0, 0.5f), 0.01f, worldBounds, 1);
     }
@@ -155,4 +161,7 @@ public class MainShip extends Sprite {
         return super.touchUp(touch, pointer);
     }
 
+    public void dispose() {
+        shootSound.dispose();
+    }
 }

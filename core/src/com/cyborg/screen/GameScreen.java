@@ -1,6 +1,7 @@
 package com.cyborg.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,8 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.cyborg.base.BaseScreen;
 import com.cyborg.math.Rect;
 import com.cyborg.pool.BulletPool;
+import com.cyborg.pool.ExplosionPool;
 import com.cyborg.sprite.Background;
 import com.cyborg.sprite.Star;
+import com.cyborg.sprite.game.Explosion;
 import com.cyborg.sprite.game.MainShip;
 
 public class GameScreen extends BaseScreen {
@@ -20,11 +23,19 @@ public class GameScreen extends BaseScreen {
     private Background background;
     private Star star[];
     private MainShip mainShip;
+
     private BulletPool bulletPool;
+    private ExplosionPool explosionPool;
+
+    private Music music;
 
     @Override
     public void show() {
         super.show();
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/zanac-bgm-1-no-intro.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.7f);
+        music.play();
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
@@ -33,6 +44,7 @@ public class GameScreen extends BaseScreen {
             star[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
+        explosionPool = new ExplosionPool(atlas);
         mainShip = new MainShip(atlas, bulletPool);
     }
 
@@ -50,10 +62,12 @@ public class GameScreen extends BaseScreen {
         }
         mainShip.update(delta);
         bulletPool.updateActiveSprites(delta);
+        explosionPool.updateActiveSprites(delta);
     }
 
     public void deleteAllDestroyed() {
         bulletPool.freeAllDestroyedActiveSprites();
+        explosionPool.freeAllDestroyedActiveSprites();
     }
 
     public void draw() {
@@ -66,6 +80,7 @@ public class GameScreen extends BaseScreen {
         }
         mainShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
+        explosionPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -84,6 +99,9 @@ public class GameScreen extends BaseScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        explosionPool.dispose();
+        mainShip.dispose();
+        music.dispose();
         super.dispose();
     }
 
@@ -101,6 +119,8 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(0.15f, touch);
         mainShip.touchDown(touch, pointer);
         return super.touchDown(touch, pointer);
     }
