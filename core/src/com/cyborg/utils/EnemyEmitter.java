@@ -52,7 +52,8 @@ public class EnemyEmitter {
                     ENEMY_SMALL_DAMAGE,
                     ENEMY_SMALL_RELOAD_INTERVAL,
                     ENEMY_SMALL_HEIGHT,
-                    ENEMY_SMALL_HP
+                    ENEMY_SMALL_HP,
+                    worldBounds
             );
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());
