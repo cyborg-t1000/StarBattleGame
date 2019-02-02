@@ -50,7 +50,7 @@ public class EnemyEmitter {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
             enemy.set(
-                    enemySmallRegion[rand.nextInt(3)],
+                    enemySmallRegion[rand.nextInt(ENEMY_CNT)],
                     enemySmallV,
                     bulletRegion,
                     ENEMY_SMALL_BULLET_HEIGHT,
