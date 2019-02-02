@@ -9,6 +9,8 @@ import com.cyborg.math.Rnd;
 import com.cyborg.pool.EnemyPool;
 import com.cyborg.sprite.game.Enemy;
 
+import java.util.Random;
+
 public class EnemyEmitter {
 
     private static final float ENEMY_SMALL_HEIGHT = 0.1f;
@@ -17,9 +19,11 @@ public class EnemyEmitter {
     private static final int ENEMY_SMALL_DAMAGE = 1;
     private static final float ENEMY_SMALL_RELOAD_INTERVAL = 3f;
     private static final int ENEMY_SMALL_HP = 1;
+    private static final int ENEMY_CNT = 3;
 
     private Vector2 enemySmallV = new Vector2(0, -0.2f);
-    private TextureRegion[] enemySmallRegion;
+    private TextureRegion[][] enemySmallRegion = new TextureRegion[ENEMY_CNT][];
+    Random rand = new Random();
 
     private TextureRegion bulletRegion;
 
@@ -32,8 +36,10 @@ public class EnemyEmitter {
 
     public EnemyEmitter(TextureAtlas atlas, EnemyPool enemyPool, Rect worldBounds) {
         this.enemyPool = enemyPool;
-        TextureRegion textureRegion = atlas.findRegion("enemy0");
-        this.enemySmallRegion = Regions.split(textureRegion, 1,2,2);
+        for (int i = 0; i < ENEMY_CNT; i++) {
+            TextureRegion textureRegion = atlas.findRegion("enemy" + i);
+            this.enemySmallRegion[i] = Regions.split(textureRegion, 1,2,2);
+        }
         this.bulletRegion = atlas.findRegion("bulletEnemy");
         this.worldBounds = worldBounds;
     }
@@ -44,7 +50,7 @@ public class EnemyEmitter {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
             enemy.set(
-                    enemySmallRegion,
+                    enemySmallRegion[rand.nextInt(3)],
                     enemySmallV,
                     bulletRegion,
                     ENEMY_SMALL_BULLET_HEIGHT,
